@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<head>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@200&display=swap" rel="stylesheet">
+  <title>South Asian's beloved chaat</title>
+  <style>
+    body {
+      text-align: center;
+      background: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiZK4igAigIRaEsEob5Y7Fu7ZIpgjDxbjnACoCRibgo9AuYKPJCPjholaGWvead2ZbDJ4&usqp=CAU);
+      background-size: cover;
+      background-position: center;
+      color: red;
+      font-family: 'Roboto Mono', monospace;
+    }
+    p {
+      font-size: 22px;
+    }
+    img {
+      border-radius: 35px;
+    }
+    input {
+      border: 5px;
+      padding: 10px;
+      font-size: 18px;
+    }
+    input[type="submit"] {
+      background:orange ;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaIENs_jb1-AH2mAj9G0NEYjBxehZfsZOmPvfOJAwTh4Plr3oEwRcH4A8Ft9op1mteMg0&usqp=CAU">
+  <p>South Asian's beloved chaat</p>
+  <input id="Name" placeholder="Your name">
+  <input id="Email" placeholder="cellphone number">
+  <input id="submit" type="submit">
+  
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
+
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyA-DXDefO1-OzVdyQHnJedoAmrS3bzcbR0",
+      authDomain: "mahima-bfdeb.firebaseapp.com",
+      projectId: "mahima-bfdeb",
+      storageBucket: "mahima-bfdeb.appspot.com",
+      messagingSenderId: "944105289068",
+      appId: "1:944105289068:web:ab00f1959f27cc3fae2f49"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const Name = document.querySelector("#Name") 
+    const Email = document.querySelector("#Email")
+    document.querySelector('#submit').addEventListener('click', Submit)
+
+    
+function Submit() {
+  const timestamp = buildTimestamp()
+  
+  set(ref(db, timestamp), {
+	  Name: Name.value,
+      email: Email.value,
+  });
+
+  Name.value = ""
+  Email.value = ""
+}
+
+  
+  function buildTimestamp() {
+  	  const now = new Date();
+  	  let timestamp = now.getFullYear().toString() + "/";
+  	  //const month = now.toLocaleString('default', { month: 'long' });
+
+  	  let month = now.getMonth()+1   //add 1 because Javascript uses 0 for January
+  	  month = month.toString()
+  	  month = addLeadingZero(month)
+  	  timestamp += month + "/"; 
+
+  	  let date = now.getDate().toString()
+  	  date = addLeadingZero(date)
+  	  timestamp += date + "/";
+
+  	  let hours = now.getHours().toString()
+  	  hours = addLeadingZero(hours)
+  	  timestamp += hours + ":";
+
+  	  let minutes = now.getMinutes().toString()
+  	  minutes = addLeadingZero(minutes)
+  	  timestamp += minutes + ":";
+
+  	  let seconds = now.getSeconds().toString()
+  	  seconds = addLeadingZero(seconds)
+  	  timestamp += seconds;
+  
+  	  return timestamp
+  	}
+	
+  	function addLeadingZero(units) {
+  		if (units.length < 2) {
+  			units = "0" + units
+  		}
+  		return units
+  	}
+  
+
+
+    
+  </script>
+</body>
